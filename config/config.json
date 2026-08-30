@@ -1,0 +1,33 @@
+{
+  "CAS_MIN_DATE": "2026-08-03",
+  "DEFAULT_DATE": "2026-08-03",
+  "CANONICAL_PATH": "C:\\Mangesh\\Jules\\CAS",
+  "VERSION_INFO": {
+    "application_version": "1.0.0",
+    "model_version": "1.0.0",
+    "feature_version": "1.0.0",
+    "data_version": "1.0.0",
+    "backtest_version": "1.0.0"
+  },
+  "LIQUIDITY_FILTERS": {
+    "min_open_interest": 1000,
+    "min_volume": 100,
+    "max_spread_pct": 5.0
+  },
+  "INDEX_CONSTITUENTS": {
+    "NIFTY": [
+      {"symbol": "RELIANCE", "weight": 9.2},
+      {"symbol": "HDFCBANK", "weight": 8.5},
+      {"symbol": "ICICIBANK", "weight": 7.8},
+      {"symbol": "INFY", "weight": 5.9},
+      {"symbol": "TCS", "weight": 4.1}
+    ],
+    "SENSEX": [
+      {"symbol": "HDFCBANK", "weight": 11.5},
+      {"symbol": "RELIANCE", "weight": 10.8},
+      {"symbol": "ICICIBANK", "weight": 9.2},
+      {"symbol": "INFY", "weight": 7.1},
+      {"symbol": "TCS", "weight": 5.4}
+    ]
+  }
+}
