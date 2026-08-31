@@ -223,13 +223,32 @@ if menu == "3:22 Analysis & Replay":
                 else:
                     st.warning(f"NO TRADE: {s_rec['reason']}")
 
-            if nifty["performance"].get("status") == "COMPLETED":
-                st.markdown("### OPTION REPLAY CHART (NIFTY)")
-                timeline = nifty["performance"]["replay_timeline"]
-                fig = go.Figure()
-                fig.add_trace(go.Scatter(x=list(timeline.keys()), y=list(timeline.values()), mode='lines+markers', name='Option Price'))
-                fig.update_layout(title="NIFTY Option Replay (15:22 -> 15:30)", template="plotly_dark")
-                st.plotly_chart(fig, use_container_width=True)
+            # Side-by-Side Option Replay Charts
+            st.markdown("---")
+            st.markdown("### OPTION REPLAY CHARTS (SIDE-BY-SIDE)")
+            c_col1, c_col2 = st.columns(2)
+
+            with c_col1:
+                st.subheader("NIFTY Option Replay Chart")
+                if nifty["performance"].get("status") == "COMPLETED":
+                    timeline = nifty["performance"]["replay_timeline"]
+                    fig_n = go.Figure()
+                    fig_n.add_trace(go.Scatter(x=list(timeline.keys()), y=list(timeline.values()), mode='lines+markers', name='NIFTY Option Price', line=dict(color='#26A69A', width=2)))
+                    fig_n.update_layout(title="NIFTY Option Price (15:22 -> 15:30)", template="plotly_dark", height=350)
+                    st.plotly_chart(fig_n, use_container_width=True)
+                else:
+                    st.info("NIFTY Option Replay Chart Unavailable")
+
+            with c_col2:
+                st.subheader("SENSEX Option Replay Chart")
+                if sensex["performance"].get("status") == "COMPLETED":
+                    timeline_s = sensex["performance"]["replay_timeline"]
+                    fig_s = go.Figure()
+                    fig_s.add_trace(go.Scatter(x=list(timeline_s.keys()), y=list(timeline_s.values()), mode='lines+markers', name='SENSEX Option Price', line=dict(color='#FF9800', width=2)))
+                    fig_s.update_layout(title="SENSEX Option Price (15:22 -> 15:30)", template="plotly_dark", height=350)
+                    st.plotly_chart(fig_s, use_container_width=True)
+                else:
+                    st.info("SENSEX Option Replay Chart Unavailable")
 
 # --- VIEW 2: SINGLE-DAY BACKTEST ---
 elif menu == "Single-Day Backtest":
