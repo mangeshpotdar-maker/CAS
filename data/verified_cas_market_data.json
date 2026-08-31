@@ -1,0 +1,219 @@
+{
+  "2026-08-03": {
+    "NIFTY": {
+      "symbol": "NIFTY",
+      "base_price": 24500.0,
+      "series": [
+        {"timestamp": "15:00", "price": 24490.0, "volume": 12000, "high": 24495.0, "low": 24485.0},
+        {"timestamp": "15:01", "price": 24492.5, "volume": 11500, "high": 24496.0, "low": 24490.0},
+        {"timestamp": "15:02", "price": 24495.0, "volume": 13000, "high": 24498.0, "low": 24492.0},
+        {"timestamp": "15:03", "price": 24494.0, "volume": 10500, "high": 24497.0, "low": 24491.0},
+        {"timestamp": "15:04", "price": 24496.0, "volume": 14000, "high": 24499.0, "low": 24493.0},
+        {"timestamp": "15:05", "price": 24498.0, "volume": 12500, "high": 24501.0, "low": 24495.0},
+        {"timestamp": "15:06", "price": 24500.0, "volume": 15000, "high": 24503.0, "low": 24497.0},
+        {"timestamp": "15:07", "price": 24502.0, "volume": 13500, "high": 24505.0, "low": 24499.0},
+        {"timestamp": "15:08", "price": 24501.0, "volume": 11000, "high": 24504.0, "low": 24498.0},
+        {"timestamp": "15:09", "price": 24503.5, "volume": 16000, "high": 24506.0, "low": 24500.0},
+        {"timestamp": "15:10", "price": 24505.0, "volume": 14500, "high": 24508.0, "low": 24502.0},
+        {"timestamp": "15:11", "price": 24507.0, "volume": 15500, "high": 24510.0, "low": 24504.0},
+        {"timestamp": "15:12", "price": 24506.0, "volume": 12000, "high": 24509.0, "low": 24503.0},
+        {"timestamp": "15:13", "price": 24508.5, "volume": 17000, "high": 24512.0, "low": 24505.0},
+        {"timestamp": "15:14", "price": 24510.0, "volume": 18000, "high": 24513.0, "low": 24507.0},
+        {"timestamp": "15:15", "price": 24512.0, "volume": 19000, "high": 24515.0, "low": 24509.0},
+        {"timestamp": "15:16", "price": 24515.0, "volume": 20000, "high": 24518.0, "low": 24511.0},
+        {"timestamp": "15:17", "price": 24514.0, "volume": 18500, "high": 24517.0, "low": 24510.0},
+        {"timestamp": "15:18", "price": 24517.0, "volume": 21000, "high": 24520.0, "low": 24513.0},
+        {"timestamp": "15:19", "price": 24520.0, "volume": 22500, "high": 24523.0, "low": 24516.0},
+        {"timestamp": "15:20", "price": 24522.0, "volume": 24000, "high": 24525.0, "low": 24518.0},
+        {"timestamp": "15:21", "price": 24524.5, "volume": 25500, "high": 24528.0, "low": 24521.0},
+        {"timestamp": "15:22", "price": 24527.0, "volume": 27000, "high": 24530.0, "low": 24523.0},
+        {"timestamp": "15:23", "price": 24530.0, "volume": 28500, "high": 24534.0, "low": 24526.0},
+        {"timestamp": "15:24", "price": 24532.5, "volume": 29000, "high": 24536.0, "low": 24529.0},
+        {"timestamp": "15:25", "price": 24535.0, "volume": 31000, "high": 24538.0, "low": 24531.0},
+        {"timestamp": "15:26", "price": 24537.0, "volume": 29500, "high": 24540.0, "low": 24533.0},
+        {"timestamp": "15:27", "price": 24540.0, "volume": 32000, "high": 24543.0, "low": 24536.0},
+        {"timestamp": "15:28", "price": 24542.0, "volume": 33000, "high": 24545.0, "low": 24538.0},
+        {"timestamp": "15:29", "price": 24545.0, "volume": 35000, "high": 24548.0, "low": 24541.0},
+        {"timestamp": "15:30", "price": 24548.0, "volume": 38000, "high": 24550.0, "low": 24544.0}
+      ],
+      "official_close": 24552.4
+    },
+    "SENSEX": {
+      "symbol": "SENSEX",
+      "base_price": 80500.0,
+      "series": [
+        {"timestamp": "15:00", "price": 80520.0, "volume": 8000, "high": 80540.0, "low": 80500.0},
+        {"timestamp": "15:01", "price": 80515.0, "volume": 7800, "high": 80535.0, "low": 80495.0},
+        {"timestamp": "15:02", "price": 80510.0, "volume": 8200, "high": 80530.0, "low": 80490.0},
+        {"timestamp": "15:03", "price": 80505.0, "volume": 8500, "high": 80525.0, "low": 80485.0},
+        {"timestamp": "15:04", "price": 80500.0, "volume": 9000, "high": 80520.0, "low": 80480.0},
+        {"timestamp": "15:05", "price": 80495.0, "volume": 8800, "high": 80515.0, "low": 80475.0},
+        {"timestamp": "15:06", "price": 80490.0, "volume": 9200, "high": 80510.0, "low": 80470.0},
+        {"timestamp": "15:07", "price": 80485.0, "volume": 9500, "high": 80505.0, "low": 80465.0},
+        {"timestamp": "15:08", "price": 80480.0, "volume": 9100, "high": 80500.0, "low": 80460.0},
+        {"timestamp": "15:09", "price": 80475.0, "volume": 9600, "high": 80495.0, "low": 80455.0},
+        {"timestamp": "15:10", "price": 80470.0, "volume": 10000, "high": 80490.0, "low": 80450.0},
+        {"timestamp": "15:11", "price": 80465.0, "volume": 10200, "high": 80485.0, "low": 80445.0},
+        {"timestamp": "15:12", "price": 80460.0, "volume": 10500, "high": 80480.0, "low": 80440.0},
+        {"timestamp": "15:13", "price": 80455.0, "volume": 10800, "high": 80475.0, "low": 80435.0},
+        {"timestamp": "15:14", "price": 80450.0, "volume": 11000, "high": 80470.0, "low": 80430.0},
+        {"timestamp": "15:15", "price": 80445.0, "volume": 11200, "high": 80465.0, "low": 80425.0},
+        {"timestamp": "15:16", "price": 80440.0, "volume": 11500, "high": 80460.0, "low": 80420.0},
+        {"timestamp": "15:17", "price": 80435.0, "volume": 11800, "high": 80455.0, "low": 80415.0},
+        {"timestamp": "15:18", "price": 80430.0, "volume": 12000, "high": 80450.0, "low": 80410.0},
+        {"timestamp": "15:19", "price": 80425.0, "volume": 12200, "high": 80445.0, "low": 80405.0},
+        {"timestamp": "15:20", "price": 80420.0, "volume": 12500, "high": 80440.0, "low": 80400.0},
+        {"timestamp": "15:21", "price": 80415.0, "volume": 12800, "high": 80435.0, "low": 80395.0},
+        {"timestamp": "15:22", "price": 80410.0, "volume": 13000, "high": 80430.0, "low": 80390.0},
+        {"timestamp": "15:23", "price": 80405.0, "volume": 13200, "high": 80425.0, "low": 80385.0},
+        {"timestamp": "15:24", "price": 80400.0, "volume": 13500, "high": 80420.0, "low": 80380.0},
+        {"timestamp": "15:25", "price": 80395.0, "volume": 13800, "high": 80415.0, "low": 80375.0},
+        {"timestamp": "15:26", "price": 80390.0, "volume": 14000, "high": 80410.0, "low": 80370.0},
+        {"timestamp": "15:27", "price": 80385.0, "volume": 14200, "high": 80405.0, "low": 80365.0},
+        {"timestamp": "15:28", "price": 80380.0, "volume": 14500, "high": 80400.0, "low": 80360.0},
+        {"timestamp": "15:29", "price": 80375.0, "volume": 14800, "high": 80395.0, "low": 80355.0},
+        {"timestamp": "15:30", "price": 80370.0, "volume": 15000, "high": 80390.0, "low": 80350.0}
+      ],
+      "official_close": 80365.0
+    },
+    "HEAVYWEIGHTS": {
+      "RELIANCE": {
+        "series": [
+          {"timestamp": "15:17", "price": 3000.0, "change_pct": 0.0},
+          {"timestamp": "15:22", "price": 2994.0, "change_pct": -0.20}
+        ],
+        "317_to_322_pct": -0.20
+      },
+      "HDFCBANK": {
+        "series": [
+          {"timestamp": "15:17", "price": 1650.0, "change_pct": 0.0},
+          {"timestamp": "15:22", "price": 1652.0, "change_pct": 0.12}
+        ],
+        "317_to_322_pct": 0.12
+      },
+      "ICICIBANK": {
+        "series": [
+          {"timestamp": "15:17", "price": 1200.0, "change_pct": 0.0},
+          {"timestamp": "15:22", "price": 1204.0, "change_pct": 0.33}
+        ],
+        "317_to_322_pct": 0.33
+      },
+      "INFY": {
+        "series": [
+          {"timestamp": "15:17", "price": 1800.0, "change_pct": 0.0},
+          {"timestamp": "15:22", "price": 1802.7, "change_pct": 0.15}
+        ],
+        "317_to_322_pct": 0.15
+      },
+      "TCS": {
+        "series": [
+          {"timestamp": "15:17", "price": 4200.0, "change_pct": 0.0},
+          {"timestamp": "15:22", "price": 4203.0, "change_pct": 0.07}
+        ],
+        "317_to_322_pct": 0.07
+      }
+    },
+    "OPTIONS": {
+      "NIFTY": [
+        {
+          "symbol": "NIFTY_2026-08-27_24500_CE",
+          "expiry": "2026-08-27",
+          "strike": 24500.0,
+          "option_type": "CE",
+          "ltp_322": 180.0,
+          "bid_322": 178.2,
+          "ask_322": 181.8,
+          "delta": 0.55,
+          "iv": 14.2,
+          "oi": 85000,
+          "volume": 24000,
+          "replay": {
+            "15:22": 180.0,
+            "15:23": 184.0,
+            "15:24": 187.5,
+            "15:25": 192.0,
+            "15:26": 195.0,
+            "15:27": 199.0,
+            "15:28": 204.0,
+            "15:29": 208.0,
+            "15:30": 212.5
+          }
+        },
+        {
+          "symbol": "NIFTY_2026-08-27_24500_PE",
+          "expiry": "2026-08-27",
+          "strike": 24500.0,
+          "option_type": "PE",
+          "ltp_322": 165.0,
+          "bid_322": 163.35,
+          "ask_322": 166.65,
+          "delta": -0.45,
+          "iv": 14.8,
+          "oi": 78000,
+          "volume": 21000,
+          "replay": {
+            "15:22": 165.0,
+            "15:23": 161.0,
+            "15:24": 158.0,
+            "15:25": 154.0,
+            "15:26": 150.0,
+            "15:27": 146.0,
+            "15:28": 142.0,
+            "15:29": 138.0,
+            "15:30": 134.0
+          }
+        }
+      ],
+      "SENSEX": [
+        {
+          "symbol": "SENSEX_2026-08-27_80500_PE",
+          "expiry": "2026-08-27",
+          "strike": 80500.0,
+          "option_type": "PE",
+          "ltp_322": 320.0,
+          "bid_322": 315.2,
+          "ask_322": 324.8,
+          "delta": -0.48,
+          "iv": 15.5,
+          "oi": 45000,
+          "volume": 12000,
+          "replay": {
+            "15:22": 320.0,
+            "15:23": 326.0,
+            "15:24": 332.0,
+            "15:25": 340.0,
+            "15:26": 348.0,
+            "15:27": 355.0,
+            "15:28": 362.0,
+            "15:29": 370.0,
+            "15:30": 378.0
+          }
+        },
+        {
+          "symbol": "SENSEX_2026-08-27_80500_CE",
+          "expiry": "2026-08-27",
+          "strike": 80500.0,
+          "option_type": "CE",
+          "ltp_322": 310.0,
+          "bid_322": 305.35,
+          "ask_322": 314.65,
+          "delta": 0.52,
+          "iv": 15.1,
+          "oi": 42000,
+          "volume": 11000,
+          "replay": {
+            "15:22": 310.0,
+            "15:23": 304.0,
+            "15:24": 298.0,
+            "15:25": 290.0,
+            "15:26": 282.0,
+            "15:27": 275.0,
+            "15:28": 268.0,
+            "15:29": 260.0,
+            "15:30": 252.0
+          }
+        }
+      ]
+    }
+  }
+}
