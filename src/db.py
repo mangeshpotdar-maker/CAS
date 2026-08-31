@@ -1,6 +1,7 @@
 import os
 import sqlite3
 import json
+import logging
 from typing import Dict, Any
 
 def get_db_path() -> str:

@@ -41,14 +41,6 @@ st.markdown("""
     .flat-card {
         border-left: 5px solid #787B86;
     }
-    .status-badge {
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-weight: bold;
-        font-size: 0.85em;
-    }
-    .badge-win { background-color: rgba(38, 166, 154, 0.2); color: #26A69A; }
-    .badge-loss { background-color: rgba(239, 83, 80, 0.2); color: #EF5350; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -95,13 +87,7 @@ def render_single_day_cards(res, date_str):
     n_pred = nifty["prediction"]
     s_pred = sensex["prediction"]
 
-    st.markdown(f"""
-    ```text
-    ========================================================
-    SINGLE-DAY CAS BACKTEST — {date_str}
-    ========================================================
-    ```
-    """)
+    st.markdown(f"### SINGLE-DAY CAS BACKTEST REPLAY — {date_str}")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -180,7 +166,7 @@ if menu == "3:22 Analysis & Replay":
                 st.markdown(f"""
                 <div class="metric-card {card_class}">
                     <h3>SENSEX</h3>
-                    <h2>DIRECTION: {s_pred['direction']} ({s_pred['probability']}% Confidence)</h2>
+                    2>DIRECTION: {s_pred['direction']} ({s_pred['probability']}% Confidence)</h2>
                     <p><b>Expected Move:</b> {s_pred['expected_move_pct']:+.2f}%</p>
                     <p><b>Closing Pressure Score:</b> {sensex['cpm']['score']} ({sensex['cpm']['label']})</p>
                     <p><b>5-Min Battle Score:</b> {sensex['battle']['score']} ({sensex['battle']['label']})</p>
@@ -188,7 +174,6 @@ if menu == "3:22 Analysis & Replay":
                 </div>
                 """, unsafe_allow_html=True)
 
-            # Heavyweights Section
             st.markdown("### TOP-5 HEAVYWEIGHT CONTRIBUTION")
             hw_tab1, hw_tab2 = st.tabs(["NIFTY Heavyweights", "SENSEX Heavyweights"])
             with hw_tab1:
@@ -196,7 +181,6 @@ if menu == "3:22 Analysis & Replay":
             with hw_tab2:
                 st.dataframe(pd.DataFrame(sensex["heavyweights"]), use_container_width=True)
 
-            # Options Recommendations & Exact Replay
             st.markdown("---")
             st.markdown("### OPTION TRADE RECOMMENDATIONS & REPLAY")
             o_col1, o_col2 = st.columns(2)
@@ -239,7 +223,6 @@ if menu == "3:22 Analysis & Replay":
                 else:
                     st.warning(f"NO TRADE: {s_rec['reason']}")
 
-            # Option Price Chart
             if nifty["performance"].get("status") == "COMPLETED":
                 st.markdown("### OPTION REPLAY CHART (NIFTY)")
                 timeline = nifty["performance"]["replay_timeline"]
@@ -258,58 +241,79 @@ elif menu == "Single-Day Backtest":
 
 # --- VIEW 3: RANGE BACKTEST ---
 elif menu == "Range Backtest":
-    st.subheader("Range Backtest")
+    st.subheader("Range Backtest & Single-Day Drill-down")
     r_col1, r_col2 = st.columns(2)
     with r_col1:
         from_date = st.selectbox("From Date", avail_dates, index=0)
     with r_col2:
         to_date = st.selectbox("To Date", avail_dates, index=len(avail_dates)-1)
 
+    selected_range = [d for d in avail_dates if from_date <= d <= to_date]
+
     if st.button("RUN RANGE BACKTEST", type="primary"):
         results = []
-        selected_range = [d for d in avail_dates if from_date <= d <= to_date]
         for d in selected_range:
-            res = engine.run_322_analysis(d)
-            if res.get("status") == "SUCCESS":
-                n_perf = res["nifty"]["performance"]
-                s_perf = res["sensex"]["performance"]
-                results.append({
-                    "Date": d,
-                    "NIFTY Signal": res["nifty"]["prediction"]["direction"],
-                    "NIFTY Option": res["nifty"]["option_recommendation"].get("option", {}).get("symbol", "NONE"),
-                    "NIFTY 3:25 Return": f"{n_perf.get('return_325_pct', 0.0):+.2f}%",
-                    "NIFTY Close Return": f"{n_perf.get('return_close_pct', 0.0):+.2f}%",
-                    "NIFTY MFE": f"{n_perf.get('mfe_pct', 0.0):+.2f}%",
-                    "NIFTY MAE": f"{n_perf.get('mae_pct', 0.0):+.2f}%",
-                    "SENSEX Signal": res["sensex"]["prediction"]["direction"],
-                    "SENSEX Option": res["sensex"]["option_recommendation"].get("option", {}).get("symbol", "NONE"),
-                    "SENSEX Close Return": f"{s_perf.get('return_close_pct', 0.0):+.2f}%"
-                })
-        st.dataframe(pd.DataFrame(results), use_container_width=True)
+            # Replay statelessly without side-effects
+            day_data = loader.get_day_data(d)
+            if day_data:
+                res = engine.run_322_analysis(d)
+                if res.get("status") == "SUCCESS":
+                    n_perf = res["nifty"]["performance"]
+                    s_perf = res["sensex"]["performance"]
+                    results.append({
+                        "Date": d,
+                        "NIFTY Signal": res["nifty"]["prediction"]["direction"],
+                        "NIFTY Option": res["nifty"]["option_recommendation"].get("option", {}).get("symbol", "NONE"),
+                        "NIFTY 3:25 Return": f"{n_perf.get('return_325_pct', 0.0):+.2f}%",
+                        "NIFTY Close Return": f"{n_perf.get('return_close_pct', 0.0):+.2f}%",
+                        "NIFTY MFE": f"{n_perf.get('mfe_pct', 0.0):+.2f}%",
+                        "NIFTY MAE": f"{n_perf.get('mae_pct', 0.0):+.2f}%",
+                        "SENSEX Signal": res["sensex"]["prediction"]["direction"],
+                        "SENSEX Option": res["sensex"]["option_recommendation"].get("option", {}).get("symbol", "NONE"),
+                        "SENSEX Close Return": f"{s_perf.get('return_close_pct', 0.0):+.2f}%"
+                    })
+        st.session_state["range_results"] = pd.DataFrame(results)
+
+    if "range_results" in st.session_state:
+        st.dataframe(st.session_state["range_results"], use_container_width=True)
+        st.markdown("---")
+        drill_date = st.selectbox("Select Row Date to Drill-Down", selected_range)
+        if st.button("DRILL-DOWN REPLAY", type="secondary"):
+            res = engine.run_322_analysis(drill_date)
+            render_single_day_cards(res, drill_date)
 
 # --- VIEW 4: PERFORMANCE ANALYTICS ---
 elif menu == "Performance Analytics":
     st.subheader("Strategy Performance & Equity Curves")
 
-    # Generate Equity Curve dynamically across available dataset
+    # Calculate performance statelessly across available dataset
     daily_returns = []
     accum = 100000.0
     equity_curve = [accum]
-    pred_up_count = 0
-    pred_down_count = 0
-    pred_flat_count = 0
+
+    # Confusion matrix counters (Pred vs Actual)
+    matrix = {"UP": {"UP": 0, "DOWN": 0, "FLAT": 0}, "DOWN": {"UP": 0, "DOWN": 0, "FLAT": 0}, "FLAT": {"UP": 0, "DOWN": 0, "FLAT": 0}}
 
     for d in avail_dates:
-        res = engine.run_322_analysis(d)
-        if res.get("status") == "SUCCESS":
-            r_pct = res["nifty"]["performance"].get("return_close_pct", 0.0)
-            accum += accum * (r_pct / 100.0)
-            equity_curve.append(accum)
-            daily_returns.append(r_pct)
-            sig = res["nifty"]["prediction"]["direction"]
-            if sig == "UP": pred_up_count += 1
-            elif sig == "DOWN": pred_down_count += 1
-            else: pred_flat_count += 1
+        day_data = loader.get_day_data(d)
+        if day_data:
+            # Predict
+            res = engine.run_322_analysis(d)
+            if res.get("status") == "SUCCESS":
+                r_pct = res["nifty"]["performance"].get("return_close_pct", 0.0)
+                accum += accum * (r_pct / 100.0)
+                equity_curve.append(accum)
+                daily_returns.append(r_pct)
+
+                pred_dir = res["nifty"]["prediction"]["direction"]
+                p_322 = day_data["NIFTY"]["series"][22]["price"]
+                p_close = day_data["NIFTY"]["official_close"]
+
+                if p_close > p_322: actual_dir = "UP"
+                elif p_close < p_322: actual_dir = "DOWN"
+                else: actual_dir = "FLAT"
+
+                matrix[pred_dir][actual_dir] += 1
 
     st.markdown("### COMBINED OPTION EQUITY CURVE")
     fig_eq = go.Figure()
@@ -317,21 +321,27 @@ elif menu == "Performance Analytics":
     fig_eq.update_layout(title="Strategy Equity Growth (Starting Capital ₹100,000)", template="plotly_dark")
     st.plotly_chart(fig_eq, use_container_width=True)
 
-    wins = sum(1 for r in daily_returns if r > 0)
-    win_rate = (wins / len(daily_returns) * 100.0) if daily_returns else 0.0
+    wins = [r for r in daily_returns if r > 0]
+    losses = [abs(r) for r in daily_returns if r < 0]
+    win_rate = (len(wins) / len(daily_returns) * 100.0) if daily_returns else 0.0
+
+    gross_profit = sum(wins)
+    gross_loss = sum(losses)
+    profit_factor = round(gross_profit / gross_loss, 2) if gross_loss > 0 else (999.0 if gross_profit > 0 else 1.0)
 
     m1, m2, m3, m4 = st.columns(4)
     m1.metric("Total Trades", len(daily_returns))
     m2.metric("Win Rate", f"{win_rate:.1f}%")
     m3.metric("Average Return", f"{np.mean(daily_returns):+.2f}%" if daily_returns else "0.00%")
-    m4.metric("Profit Factor", "Inf (No losses in sample set)" if all(r >= 0 for r in daily_returns) else "1.0")
+    m4.metric("Profit Factor", f"{profit_factor}")
 
-    st.markdown("### DIRECTION CONFUSION MATRIX")
-    st.dataframe(pd.DataFrame({
-        "ACTUAL UP": [pred_up_count, 0, 0],
-        "ACTUAL DOWN": [0, pred_down_count, 0],
-        "ACTUAL FLAT": [0, 0, pred_flat_count]
-    }, index=["PRED UP", "PRED DOWN", "PRED FLAT"]))
+    st.markdown("### DIRECTION CONFUSION MATRIX (PREDICTED vs ACTUAL CLOSE)")
+    cm_df = pd.DataFrame({
+        "ACTUAL UP": [matrix["UP"]["UP"], matrix["DOWN"]["UP"], matrix["FLAT"]["UP"]],
+        "ACTUAL DOWN": [matrix["UP"]["DOWN"], matrix["DOWN"]["DOWN"], matrix["FLAT"]["DOWN"]],
+        "ACTUAL FLAT": [matrix["UP"]["FLAT"], matrix["DOWN"]["FLAT"], matrix["FLAT"]["FLAT"]]
+    }, index=["PRED UP", "PRED DOWN", "PRED FLAT"])
+    st.dataframe(cm_df, use_container_width=True)
 
 # --- VIEW 5: DATA QUALITY & SYSTEM HEALTH ---
 elif menu == "Data Quality & System Health":

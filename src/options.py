@@ -16,6 +16,7 @@ class OptionSelector:
         """
         Selects one best option based on direction (CE for UP, PE for DOWN, NO TRADE for FLAT)
         and scores candidates using Greeks, liquidity, and spread.
+        Uses realistic entry method fallback: ASK -> MID -> LTP.
         """
         if predicted_direction == "FLAT":
             return {
@@ -41,7 +42,7 @@ class OptionSelector:
             bid = opt.get("bid_322", 0.0)
             ask = opt.get("ask_322", 0.0)
 
-            if bid > 0:
+            if bid > 0 and ask > 0:
                 spread_pct = ((ask - bid) / bid) * 100.0
             else:
                 spread_pct = 999.0
@@ -81,9 +82,20 @@ class OptionSelector:
         best = candidates[0]
         best_contract = best["contract"]
 
-        # Freeze 3:22 recommendation fields strictly
-        entry_price = best_contract.get("ask_322") if best_contract.get("ask_322") else best_contract.get("ltp_322")
-        entry_method = "ASK" if best_contract.get("ask_322") else "LTP"
+        # Realistic Entry Price Fallback: ASK -> MID -> LTP
+        ask_val = best_contract.get("ask_322", 0.0)
+        bid_val = best_contract.get("bid_322", 0.0)
+        ltp_val = best_contract.get("ltp_322", 0.0)
+
+        if ask_val > 0:
+            entry_price = ask_val
+            entry_method = "ASK"
+        elif bid_val > 0 and ask_val > 0:
+            entry_price = round((bid_val + ask_val) / 2.0, 2)
+            entry_method = "MID"
+        else:
+            entry_price = ltp_val
+            entry_method = "LTP"
 
         frozen_card = {
             "symbol": best_contract.get("symbol"),
@@ -93,9 +105,9 @@ class OptionSelector:
             "option_type": best_contract.get("option_type"),
             "entry_price": entry_price,
             "entry_method": entry_method,
-            "bid": best_contract.get("bid_322"),
-            "ask": best_contract.get("ask_322"),
-            "ltp": best_contract.get("ltp_322"),
+            "bid": bid_val,
+            "ask": ask_val,
+            "ltp": ltp_val,
             "delta": best_contract.get("delta"),
             "iv": best_contract.get("iv"),
             "oi": best_contract.get("oi"),
