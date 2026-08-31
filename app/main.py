@@ -93,7 +93,7 @@ def render_single_day_cards(res, date_str):
     with col1:
         st.subheader("NIFTY 50")
         st.write(f"**Prediction:** {n_pred['direction']} — {n_pred['probability']}%")
-        if nifty["option_recommendation"]["recommendation"] == "BUY":
+        if nifty["option_recommendation"]["recommendation"] == "BUY" and nifty["option_recommendation"].get("option"):
             opt = nifty["option_recommendation"]["option"]
             st.write(f"**Recommended Option:** `{opt['symbol']}`")
             st.write(f"**Entry (3:22):** ₹{n_perf['entry_price']} ({opt['entry_method']})")
@@ -102,12 +102,12 @@ def render_single_day_cards(res, date_str):
             st.write(f"**MFE:** +{n_perf['mfe_pct']}% | **MAE:** {n_perf['mae_pct']}%")
             st.markdown(f"**RESULT:** `{n_perf['result']}`")
         else:
-            st.warning("NO TRADE RECOMMENDED")
+            st.warning(f"NO TRADE RECOMMENDED: {nifty['option_recommendation'].get('reason', 'N/A')}")
 
     with col2:
         st.subheader("SENSEX")
         st.write(f"**Prediction:** {s_pred['direction']} — {s_pred['probability']}%")
-        if sensex["option_recommendation"]["recommendation"] == "BUY":
+        if sensex["option_recommendation"]["recommendation"] == "BUY" and sensex["option_recommendation"].get("option"):
             opt = sensex["option_recommendation"]["option"]
             st.write(f"**Recommended Option:** `{opt['symbol']}`")
             st.write(f"**Entry (3:22):** ₹{s_perf['entry_price']} ({opt['entry_method']})")
@@ -116,7 +116,7 @@ def render_single_day_cards(res, date_str):
             st.write(f"**MFE:** +{s_perf['mfe_pct']}% | **MAE:** {s_perf['mae_pct']}%")
             st.markdown(f"**RESULT:** `{s_perf['result']}`")
         else:
-            st.warning("NO TRADE RECOMMENDED")
+            st.warning(f"NO TRADE RECOMMENDED: {sensex['option_recommendation'].get('reason', 'N/A')}")
 
 # --- VIEW 1: 3:22 ANALYSIS & REPLAY ---
 if menu == "3:22 Analysis & Replay":
@@ -190,7 +190,7 @@ if menu == "3:22 Analysis & Replay":
                 n_rec = nifty["option_recommendation"]
                 n_perf = nifty["performance"]
 
-                if n_rec["recommendation"] == "BUY":
+                if n_rec["recommendation"] == "BUY" and n_rec.get("option"):
                     opt = n_rec["option"]
                     st.json(opt)
                     st.markdown(f"""
@@ -209,7 +209,7 @@ if menu == "3:22 Analysis & Replay":
                 s_rec = sensex["option_recommendation"]
                 s_perf = sensex["performance"]
 
-                if s_rec["recommendation"] == "BUY":
+                if s_rec["recommendation"] == "BUY" and s_rec.get("option"):
                     opt = s_rec["option"]
                     st.json(opt)
                     st.markdown(f"""
@@ -259,16 +259,18 @@ elif menu == "Range Backtest":
                 if res.get("status") == "SUCCESS":
                     n_perf = res["nifty"]["performance"]
                     s_perf = res["sensex"]["performance"]
+                    n_opt_symbol = (res["nifty"]["option_recommendation"].get("option") or {}).get("symbol", "NONE")
+                    s_opt_symbol = (res["sensex"]["option_recommendation"].get("option") or {}).get("symbol", "NONE")
                     results.append({
                         "Date": d,
                         "NIFTY Signal": res["nifty"]["prediction"]["direction"],
-                        "NIFTY Option": res["nifty"]["option_recommendation"].get("option", {}).get("symbol", "NONE"),
+                        "NIFTY Option": n_opt_symbol,
                         "NIFTY 3:25 Return": f"{n_perf.get('return_325_pct', 0.0):+.2f}%",
                         "NIFTY Close Return": f"{n_perf.get('return_close_pct', 0.0):+.2f}%",
                         "NIFTY MFE": f"{n_perf.get('mfe_pct', 0.0):+.2f}%",
                         "NIFTY MAE": f"{n_perf.get('mae_pct', 0.0):+.2f}%",
                         "SENSEX Signal": res["sensex"]["prediction"]["direction"],
-                        "SENSEX Option": res["sensex"]["option_recommendation"].get("option", {}).get("symbol", "NONE"),
+                        "SENSEX Option": s_opt_symbol,
                         "SENSEX Close Return": f"{s_perf.get('return_close_pct', 0.0):+.2f}%"
                     })
         st.session_state["range_results"] = pd.DataFrame(results)
