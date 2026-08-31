@@ -2,10 +2,14 @@
 TITLE CAS 3:22 System Installer
 COLOR 0A
 
+:: Force working directory to project base directory
+cd /d %~dp0
+
 echo =======================================================================
 echo          CAS 3:22 NIFTY + SENSEX AI SYSTEM - INSTALLER
 echo =======================================================================
-cd /d %~dp0
+echo Base Directory: %CD%
+echo.
 
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
@@ -16,7 +20,7 @@ if %errorlevel% neq 0 (
 )
 
 if not exist "venv" (
-    echo Creating virtual environment...
+    echo Creating local virtual environment in subfolder 'venv'...
     python -m venv venv
 )
 
@@ -34,7 +38,7 @@ if %errorlevel% equ 0 (
     python -m pip install -r requirements.txt
 )
 
-echo Initializing database...
+echo Initializing database and local subfolders...
 python -c "from src.db import init_db; init_db()"
 
 echo.

@@ -2,13 +2,15 @@
 TITLE CAS 3:22 System - One-Click Installer and Launcher
 COLOR 0A
 
+:: Force working directory to project base directory
+cd /d %~dp0
+
 echo =======================================================================
 echo          CAS 3:22 NIFTY + SENSEX AI SYSTEM - ONE-CLICK INSTALL AND RUN
 echo =======================================================================
 echo Canonical Production Path: C:\Mangesh\Jules\CAS
+echo Base Directory: %CD%
 echo.
-
-cd /d %~dp0
 
 :: Check for Python installation
 python --version >nul 2>&1
@@ -20,9 +22,9 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
-echo [1/4] Checking Python Virtual Environment...
+echo [1/4] Checking Python Virtual Environment in base subfolder 'venv'...
 if not exist "venv" (
-    echo [2/4] Creating virtual environment 'venv'...
+    echo Creating virtual environment 'venv' inside base folder...
     python -m venv venv
     if %errorlevel% neq 0 (
         echo [WARNING] Failed to create venv. Proceeding with system Python...
@@ -30,7 +32,7 @@ if not exist "venv" (
 )
 
 if exist "venv\Scripts\activate.bat" (
-    echo Activating virtual environment...
+    echo Activating local virtual environment...
     call venv\Scripts\activate.bat
 )
 
@@ -39,7 +41,7 @@ python -c "import streamlit, pandas, numpy, plotly, scipy, pytest" >nul 2>&1
 if %errorlevel% equ 0 (
     echo [INFO] All required libraries are already installed! Skipping pip install.
 ) else (
-    echo [3/4] Installing missing dependencies from requirements.txt...
+    echo [3/4] Installing missing dependencies from requirements.txt into local environment...
     python -m pip install --upgrade pip
     python -m pip install -r requirements.txt
     if %errorlevel% neq 0 (
@@ -50,7 +52,7 @@ if %errorlevel% equ 0 (
     )
 )
 
-echo [4/4] Initializing Database and Logging...
+echo [4/4] Initializing Database and Logging subfolders...
 python -c "from src.db import init_db; init_db()"
 
 echo.
