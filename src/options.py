@@ -87,11 +87,11 @@ class OptionSelector:
         bid_val = best_contract.get("bid_322", 0.0)
         ltp_val = best_contract.get("ltp_322", 0.0)
 
-        if ask_val > 0:
+        if ask_val > 0 and bid_val > 0:
             entry_price = ask_val
             entry_method = "ASK"
-        elif bid_val > 0 and ask_val > 0:
-            entry_price = round((bid_val + ask_val) / 2.0, 2)
+        elif ask_val > 0 or bid_val > 0:
+            entry_price = round((bid_val + ask_val) / 2.0 if (bid_val + ask_val) > 0 else (ask_val or bid_val), 2)
             entry_method = "MID"
         else:
             entry_price = ltp_val

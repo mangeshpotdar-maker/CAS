@@ -1,9 +1,9 @@
 @echo off
-TITLE CAS 3:22 System - One-Click Installer & Launcher
+TITLE CAS 3:22 System - One-Click Installer and Launcher
 COLOR 0A
 
 echo =======================================================================
-echo          CAS 3:22 NIFTY + SENSEX AI SYSTEM - ONE-CLICK INSTALL & RUN
+echo          CAS 3:22 NIFTY + SENSEX AI SYSTEM - ONE-CLICK INSTALL AND RUN
 echo =======================================================================
 echo Canonical Production Path: C:\Mangesh\Jules\CAS
 echo.
@@ -30,21 +30,27 @@ if not exist "venv" (
 )
 
 if exist "venv\Scripts\activate.bat" (
-    echo [2/4] Activating virtual environment...
+    echo Activating virtual environment...
     call venv\Scripts\activate.bat
 )
 
-echo [3/4] Installing / Updating dependencies from requirements.txt...
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-if %errorlevel% neq 0 (
-    COLOR 0C
-    echo [ERROR] Dependency installation failed. Please check your internet connection.
-    pause
-    exit /b 1
+echo [2/4] Checking availability of required software libraries...
+python -c "import streamlit, pandas, numpy, plotly, scipy, pytest" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo [INFO] All required libraries are already installed! Skipping pip install.
+) else (
+    echo [3/4] Installing missing dependencies from requirements.txt...
+    python -m pip install --upgrade pip
+    python -m pip install -r requirements.txt
+    if %errorlevel% neq 0 (
+        COLOR 0C
+        echo [ERROR] Dependency installation failed. Please check your internet connection.
+        pause
+        exit /b 1
+    )
 )
 
-echo [4/4] Initializing Database & Logging...
+echo [4/4] Initializing Database and Logging...
 python -c "from src.db import init_db; init_db()"
 
 echo.

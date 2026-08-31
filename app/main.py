@@ -166,7 +166,7 @@ if menu == "3:22 Analysis & Replay":
                 st.markdown(f"""
                 <div class="metric-card {card_class}">
                     <h3>SENSEX</h3>
-                    2>DIRECTION: {s_pred['direction']} ({s_pred['probability']}% Confidence)</h2>
+                    <h2>DIRECTION: {s_pred['direction']} ({s_pred['probability']}% Confidence)</h2>
                     <p><b>Expected Move:</b> {s_pred['expected_move_pct']:+.2f}%</p>
                     <p><b>Closing Pressure Score:</b> {sensex['cpm']['score']} ({sensex['cpm']['label']})</p>
                     <p><b>5-Min Battle Score:</b> {sensex['battle']['score']} ({sensex['battle']['label']})</p>
@@ -253,7 +253,6 @@ elif menu == "Range Backtest":
     if st.button("RUN RANGE BACKTEST", type="primary"):
         results = []
         for d in selected_range:
-            # Replay statelessly without side-effects
             day_data = loader.get_day_data(d)
             if day_data:
                 res = engine.run_322_analysis(d)
@@ -286,18 +285,15 @@ elif menu == "Range Backtest":
 elif menu == "Performance Analytics":
     st.subheader("Strategy Performance & Equity Curves")
 
-    # Calculate performance statelessly across available dataset
     daily_returns = []
     accum = 100000.0
     equity_curve = [accum]
 
-    # Confusion matrix counters (Pred vs Actual)
     matrix = {"UP": {"UP": 0, "DOWN": 0, "FLAT": 0}, "DOWN": {"UP": 0, "DOWN": 0, "FLAT": 0}, "FLAT": {"UP": 0, "DOWN": 0, "FLAT": 0}}
 
     for d in avail_dates:
         day_data = loader.get_day_data(d)
         if day_data:
-            # Predict
             res = engine.run_322_analysis(d)
             if res.get("status") == "SUCCESS":
                 r_pct = res["nifty"]["performance"].get("return_close_pct", 0.0)

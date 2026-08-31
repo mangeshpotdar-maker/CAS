@@ -24,9 +24,15 @@ if exist "venv\Scripts\activate.bat" (
     call venv\Scripts\activate.bat
 )
 
-echo Installing dependencies...
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
+echo Checking availability of required software libraries...
+python -c "import streamlit, pandas, numpy, plotly, scipy, pytest" >nul 2>&1
+if %errorlevel% equ 0 (
+    echo [INFO] All required libraries are already installed! Skipping pip install.
+) else (
+    echo Installing missing dependencies from requirements.txt...
+    python -m pip install --upgrade pip
+    python -m pip install -r requirements.txt
+)
 
 echo Initializing database...
 python -c "from src.db import init_db; init_db()"
